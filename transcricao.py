@@ -1,21 +1,22 @@
 import io
+import os
 
 from openai import APIConnectionError, APIStatusError, AuthenticationError, OpenAI
 import streamlit as st
 
 
-OPENAI_API_KEY = ""
 MODELO_TRANSCRICAO = "gpt-4o-mini-transcribe"
 
 
 def transcrever_audio(audio: io.BytesIO, nome_arquivo: str, modelo: str) -> str:
-    if not OPENAI_API_KEY.strip():
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    if not api_key:
         raise RuntimeError(
-            "A OPENAI_API_KEY está vazia. Preencha a chave em transcricao.py "
-            "antes de iniciar a transcrição."
+            "A OPENAI_API_KEY não está configurada. Defina-a no ambiente "
+            "ou no gerenciador de secrets da aplicação."
         )
 
-    cliente = OpenAI(api_key=OPENAI_API_KEY)
+    cliente = OpenAI(api_key=api_key)
     resposta = cliente.audio.transcriptions.create(
         model=modelo,
         file=(nome_arquivo, audio, "audio/mpeg"),

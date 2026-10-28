@@ -152,11 +152,15 @@ activemq-data/
 # Environments
 .env
 .envrc
+*.env
 .venv
 env/
 venv/
 ENV/
 env.bak/
+
+# Streamlit secrets
+.streamlit/secrets.toml
 venv.bak/
 
 # Spyder project settings
