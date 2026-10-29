@@ -33,7 +33,8 @@ Regras de resposta:
 """.strip()
 
 
-from DB import SessionLocal, MODELO_TRANSCRICAO
+from DB import SessionLocal
+from transcricao import MODELO_TRANSCRICAO
 
 
 def inicializar_banco() -> None:
