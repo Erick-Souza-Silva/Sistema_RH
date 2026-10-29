@@ -5,6 +5,10 @@ from openai import APIConnectionError, APIStatusError, AuthenticationError, Open
 import streamlit as st
 
 
+
+
+
+
 MODELO_TRANSCRICAO = "gpt-4o-mini-transcribe"
 
 

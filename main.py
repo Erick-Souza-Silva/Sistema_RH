@@ -7,6 +7,7 @@ import pandas as pd
 import streamlit as st
 
 
+
 PROMPT_SISTEMA_RH = """
 Você é o assistente virtual do Sistema de Relatórios RH.
 
@@ -30,6 +31,20 @@ Regras de resposta:
 7. Se não houver relatórios, responda perguntas gerais de RH sem fingir que há
     dados cadastrados e informe quando uma resposta dependeria de um relatório.
 """.strip()
+
+
+from DB import SessionLocal, MODELO_TRANSCRICAO
+
+
+def inicializar_banco() -> None:
+    """Abre e encerra uma sessão para inicializar o banco do sistema."""
+    sessao = SessionLocal()
+    sessao.close()
+
+
+def Modelo_Transcricao() -> str:
+    """Retorna o modelo de transcrição configurado."""
+    return MODELO_TRANSCRICAO
 
 
 def user_input_Vezes() -> int:
@@ -263,10 +278,12 @@ def Chat_RH_Bot() -> None:
 
 
 def main() -> None:
+    inicializar_banco()
     st.title("Sistema de Relatórios RH")
     st.sidebar.title("Navegação")
     page = st.sidebar.radio("Escolha uma página:", ["Planilha Principal", "Gráfico de Relatórios", "Chat RH Bot"])
 
+    
     if page == "Planilha Principal":
         Planiha_RH()
     elif page == "Gráfico de Relatórios":
