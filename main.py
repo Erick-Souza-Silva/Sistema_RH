@@ -108,6 +108,11 @@ def obter_chave_api(nome: str) -> str | None:
         chave = st.secrets.get(nome)
     except (FileNotFoundError, KeyError):
         chave = None
+    if not chave:
+        try:
+            chave = st.secrets["IA API"].get(nome)
+        except (FileNotFoundError, KeyError):
+            chave = None
     return chave or os.getenv(nome)
 
 

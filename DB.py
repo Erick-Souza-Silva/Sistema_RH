@@ -7,6 +7,7 @@ from datetime import date, datetime
 from decimal import Decimal
 from enum import Enum
 
+import streamlit as st
 from sqlalchemy import (
 	Boolean,
 	Date,
@@ -25,7 +26,15 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship,
 def _database_url() -> str:
 	url = os.getenv("DATABASE_URL")
 	if not url:
-		raise RuntimeError("Defina a variável de ambiente DATABASE_URL do Neon.")
+		try:
+			url = st.secrets["connections"]["neon"]["url"]
+		except (FileNotFoundError, KeyError):
+			url = None
+	if not url:
+		raise RuntimeError(
+			"Defina DATABASE_URL no ambiente ou connections.neon.url "
+			"em .streamlit/secrets.toml."
+		)
 	if url.startswith("postgres://"):
 		url = "postgresql+psycopg://" + url[len("postgres://") :]
 	elif url.startswith("postgresql://"):
