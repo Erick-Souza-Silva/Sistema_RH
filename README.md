@@ -10,7 +10,7 @@ streamlit run main.py
 O aplicativo local será iniciado na porta `8502`:
 <http://localhost:8502>
 
-## Configurar o chatbot
+## Configurar o chatbot [local]
 
 O chatbot funciona mesmo sem relatórios preenchidos. Para configurar as APIs
 localmente, copie `.streamlit/secrets.toml.example` para
